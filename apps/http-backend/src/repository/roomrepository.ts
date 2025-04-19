@@ -1,4 +1,4 @@
-import client from "@repo/db/src/client";
+import client from "@repo/db/prismaclient";
 
 class RoomRepository{
     static instance : RoomRepository;

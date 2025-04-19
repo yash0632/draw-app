@@ -2,9 +2,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from "dotenv"
 import {Request,Response,NextFunction} from "express"
 
-dotenv.config();
-
-const JWT_SECRET = process.env.JWT_SECRET || '123456'
+import {JWT_SECRET} from "@repo/backend-common/config"
 
 //Jwt verify and jwt sign
 

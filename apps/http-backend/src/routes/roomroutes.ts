@@ -1,12 +1,12 @@
 import express,{Request,Response } from "express";
-import { createRoomSchema,addRoomSchema } from "../schemas/roomschema";
+import { createRoomSchema,addRoomSchema } from "@repo/common/schema/roomschema";
 import RoomControllerInstance from "../controllers/roomcontroller";
 const router:express.Router = express.Router();
 import { jwtMiddleWareFunc } from "../auth/auth";
 
 
 //@ts-ignore
-router.post('create-room',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
+router.post('create',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
     try{
         const {roomName} = req.body;
         const response = createRoomSchema.safeParse(req.body);

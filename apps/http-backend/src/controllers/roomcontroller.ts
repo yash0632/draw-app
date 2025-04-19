@@ -1,5 +1,5 @@
 import {Request,Response} from "express"
-import {CreateRoomRequest,AddRoomRequest} from "../types/roomtypes"
+import {CreateRoomType,AddRoomType} from "@repo/common/types/roomtype"
 
 import RoomServiceInstance from "../services/roomservices"
 class RoomController{
@@ -13,7 +13,7 @@ class RoomController{
         return RoomController.instance;
     }
 
-    createRoom = async(req:Request<{},{},CreateRoomRequest>,res:Response)=>{
+    createRoom = async(req:Request<{},{},CreateRoomType>,res:Response)=>{
         const {roomName} = req.body;
         try{
             if(!req.email){
@@ -35,7 +35,7 @@ class RoomController{
     }
 
 
-    addRoomMember = async(req:Request<{},{},AddRoomRequest>,res:Response)=>{
+    addRoomMember = async(req:Request<{},{},AddRoomType>,res:Response)=>{
         const {roomName} = req.body;
         try{
             if(!req.email){

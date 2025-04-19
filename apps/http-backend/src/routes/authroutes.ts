@@ -1,5 +1,5 @@
 import express,{Request,Response } from "express";
-import {signupSchema,signinSchema} from "../schemas/authschema";
+import {signupSchema,signinSchema} from "@repo/common/schema/userschema";
 import AuthControllerInstance from "../controllers/authcontroller";
 
 

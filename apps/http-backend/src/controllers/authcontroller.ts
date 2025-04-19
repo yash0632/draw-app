@@ -1,6 +1,7 @@
 import {Request,Response} from "express"
 import crypto from "crypto"
 import AuthServicesInstance from "../services/authservices"
+import { SignInType, SignUpType } from "@repo/common/types/usertype";
 
 class AuthController{
     static instance:AuthController
@@ -14,7 +15,7 @@ class AuthController{
         return AuthController.instance;
     }
 
-    register = async(request:Request,res:Response)=>{
+    register = async(request:Request<{},{},SignUpType>,res:Response)=>{
         try{
             const {username,email,password} = request.body;
 
@@ -33,7 +34,7 @@ class AuthController{
     }
 
 
-    login=async(req:Request,res:Response)=>{
+    login=async(req:Request<{},{},SignInType>,res:Response)=>{
         try{
             const{email,password} = req.body;
 
