@@ -1,4 +1,5 @@
 import {Request,Response} from "express"
+import {CreateRoomRequest,AddRoomRequest} from "../types/roomtypes"
 
 import RoomServiceInstance from "../services/roomservices"
 class RoomController{
@@ -12,15 +13,17 @@ class RoomController{
         return RoomController.instance;
     }
 
-    createRoom = async(req:Request,res:Response)=>{
+    createRoom = async(req:Request<{},{},CreateRoomRequest>,res:Response)=>{
         const {roomName} = req.body;
         try{
             if(!req.email){
                 throw new Error("Internal Server Error");
             }
-            const room = await RoomServiceInstance.createRoom(roomName,req.email);
+            const {roomId} = await RoomServiceInstance.createRoom(roomName,req.email);
             return res.json({
-                roomName:room.roomName
+                roomName:roomName,
+                roomId:roomId,
+                message:"Room created successfully"
             })
         }
         catch(err){
@@ -32,7 +35,7 @@ class RoomController{
     }
 
 
-    addRoomMember = async(req:Request,res:Response)=>{
+    addRoomMember = async(req:Request<{},{},AddRoomRequest>,res:Response)=>{
         const {roomName} = req.body;
         try{
             if(!req.email){
@@ -40,9 +43,11 @@ class RoomController{
                     message:"Internal Server Error"
                 })
             }
-            const room = await RoomServiceInstance.addRoomMember(roomName,req.email);
+            const {roomId} = await RoomServiceInstance.addRoomMember(roomName,req.email);
             return res.json({
-                roomName:room.roomName
+                roomName:roomName,
+                roomId:roomId,
+                message:"Room member added successfully"
             })
         }
         catch(error){

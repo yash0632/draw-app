@@ -16,6 +16,7 @@ router.post('create-room',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
             })
             return
         }
+        
 
         await RoomControllerInstance.createRoom(req,res);
 
@@ -27,6 +28,7 @@ router.post('create-room',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
     }
 })
 
+//@ts-ignore
 router.post('add-user',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
     try{
         const {roomName} = req.body;

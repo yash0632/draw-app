@@ -1,21 +1,17 @@
-import {WebSocketServer} from "ws"
+
+import express from "express"
 import dotenv from "dotenv"
+import configureSockets from "./sockets"
 dotenv.config()
 
 const port = Number(process.env.PORT) || 8080
 
-const wss = new WebSocketServer({port})
+const app = express();
 
-wss.on('connection',function connection(ws){
-    ws.on('error',console.error);
-
-    ws.on('message',function message(data){
-        wss.clients.forEach(function each(client){
-            if(client !== ws && client.readyState === WebSocket.OPEN){
-                client.send(data)
-            }
-        })
-    })
-
-    ws.send('something')
+const server = app.listen((port),()=>{
+    console.log("WebSocketServer started on port",port)
 })
+
+
+configureSockets(server);
+console.log("Server started on port",port)

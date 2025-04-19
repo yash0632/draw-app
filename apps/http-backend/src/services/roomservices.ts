@@ -19,7 +19,7 @@ class RoomService{
             }
             const userId = user.id;
             const room = await RoomRepositoryInstance.createRoom(roomName,userId);
-            return room;
+            return {roomId:room.id};
         }
         catch(err){
             throw err;
@@ -31,12 +31,12 @@ class RoomService{
         try{
             const user = await UserRepositoryInstance.getUser(email);
             if(!user){
-                throw new Error('user not found');
+                throw new Error("User not found");
             }
             const userId = user.id;
             const roomId = await RoomRepositoryInstance.getRoomId(roomName);
-            const room = await RoomRepositoryInstance.addRoomMember(roomName,userId);
-            return room;
+            const room = await RoomRepositoryInstance.addRoomMember(roomId,userId);
+            return {roomId:room.id};
         }
         catch(err){
             throw err;

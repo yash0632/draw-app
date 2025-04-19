@@ -26,8 +26,7 @@ model Users {
 }
 
 model Rooms {
-  id          Int     @id @default(autoincrement())
-  roomId      String  @unique
+  id          Int     @id @unique @default(autoincrement())
   roomName    String
   ownerId     Int
   roomMembers Users[]

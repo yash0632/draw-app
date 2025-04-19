@@ -2123,21 +2123,18 @@ export namespace Prisma {
 
   export type RoomsMinAggregateOutputType = {
     id: number | null
-    roomId: string | null
     roomName: string | null
     ownerId: number | null
   }
 
   export type RoomsMaxAggregateOutputType = {
     id: number | null
-    roomId: string | null
     roomName: string | null
     ownerId: number | null
   }
 
   export type RoomsCountAggregateOutputType = {
     id: number
-    roomId: number
     roomName: number
     ownerId: number
     _all: number
@@ -2156,21 +2153,18 @@ export namespace Prisma {
 
   export type RoomsMinAggregateInputType = {
     id?: true
-    roomId?: true
     roomName?: true
     ownerId?: true
   }
 
   export type RoomsMaxAggregateInputType = {
     id?: true
-    roomId?: true
     roomName?: true
     ownerId?: true
   }
 
   export type RoomsCountAggregateInputType = {
     id?: true
-    roomId?: true
     roomName?: true
     ownerId?: true
     _all?: true
@@ -2264,7 +2258,6 @@ export namespace Prisma {
 
   export type RoomsGroupByOutputType = {
     id: number
-    roomId: string
     roomName: string
     ownerId: number
     _count: RoomsCountAggregateOutputType | null
@@ -2290,7 +2283,6 @@ export namespace Prisma {
 
   export type RoomsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    roomId?: boolean
     roomName?: boolean
     ownerId?: boolean
     roomMembers?: boolean | Rooms$roomMembersArgs<ExtArgs>
@@ -2299,26 +2291,23 @@ export namespace Prisma {
 
   export type RoomsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    roomId?: boolean
     roomName?: boolean
     ownerId?: boolean
   }, ExtArgs["result"]["rooms"]>
 
   export type RoomsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    roomId?: boolean
     roomName?: boolean
     ownerId?: boolean
   }, ExtArgs["result"]["rooms"]>
 
   export type RoomsSelectScalar = {
     id?: boolean
-    roomId?: boolean
     roomName?: boolean
     ownerId?: boolean
   }
 
-  export type RoomsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roomId" | "roomName" | "ownerId", ExtArgs["result"]["rooms"]>
+  export type RoomsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roomName" | "ownerId", ExtArgs["result"]["rooms"]>
   export type RoomsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     roomMembers?: boolean | Rooms$roomMembersArgs<ExtArgs>
     _count?: boolean | RoomsCountOutputTypeDefaultArgs<ExtArgs>
@@ -2333,7 +2322,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      roomId: string
       roomName: string
       ownerId: number
     }, ExtArgs["result"]["rooms"]>
@@ -2761,7 +2749,6 @@ export namespace Prisma {
    */
   interface RoomsFieldRefs {
     readonly id: FieldRef<"Rooms", 'Int'>
-    readonly roomId: FieldRef<"Rooms", 'String'>
     readonly roomName: FieldRef<"Rooms", 'String'>
     readonly ownerId: FieldRef<"Rooms", 'Int'>
   }
@@ -3222,7 +3209,6 @@ export namespace Prisma {
 
   export const RoomsScalarFieldEnum: {
     id: 'id',
-    roomId: 'roomId',
     roomName: 'roomName',
     ownerId: 'ownerId'
   };
@@ -3377,7 +3363,6 @@ export namespace Prisma {
     OR?: RoomsWhereInput[]
     NOT?: RoomsWhereInput | RoomsWhereInput[]
     id?: IntFilter<"Rooms"> | number
-    roomId?: StringFilter<"Rooms"> | string
     roomName?: StringFilter<"Rooms"> | string
     ownerId?: IntFilter<"Rooms"> | number
     roomMembers?: UsersListRelationFilter
@@ -3385,7 +3370,6 @@ export namespace Prisma {
 
   export type RoomsOrderByWithRelationInput = {
     id?: SortOrder
-    roomId?: SortOrder
     roomName?: SortOrder
     ownerId?: SortOrder
     roomMembers?: UsersOrderByRelationAggregateInput
@@ -3393,18 +3377,16 @@ export namespace Prisma {
 
   export type RoomsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    roomId?: string
     AND?: RoomsWhereInput | RoomsWhereInput[]
     OR?: RoomsWhereInput[]
     NOT?: RoomsWhereInput | RoomsWhereInput[]
     roomName?: StringFilter<"Rooms"> | string
     ownerId?: IntFilter<"Rooms"> | number
     roomMembers?: UsersListRelationFilter
-  }, "id" | "roomId">
+  }, "id" | "id">
 
   export type RoomsOrderByWithAggregationInput = {
     id?: SortOrder
-    roomId?: SortOrder
     roomName?: SortOrder
     ownerId?: SortOrder
     _count?: RoomsCountOrderByAggregateInput
@@ -3419,7 +3401,6 @@ export namespace Prisma {
     OR?: RoomsScalarWhereWithAggregatesInput[]
     NOT?: RoomsScalarWhereWithAggregatesInput | RoomsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Rooms"> | number
-    roomId?: StringWithAggregatesFilter<"Rooms"> | string
     roomName?: StringWithAggregatesFilter<"Rooms"> | string
     ownerId?: IntWithAggregatesFilter<"Rooms"> | number
   }
@@ -3484,7 +3465,6 @@ export namespace Prisma {
   }
 
   export type RoomsCreateInput = {
-    roomId: string
     roomName: string
     ownerId: number
     roomMembers?: UsersCreateNestedManyWithoutRoomMemberInput
@@ -3492,14 +3472,12 @@ export namespace Prisma {
 
   export type RoomsUncheckedCreateInput = {
     id?: number
-    roomId: string
     roomName: string
     ownerId: number
     roomMembers?: UsersUncheckedCreateNestedManyWithoutRoomMemberInput
   }
 
   export type RoomsUpdateInput = {
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
     roomMembers?: UsersUpdateManyWithoutRoomMemberNestedInput
@@ -3507,7 +3485,6 @@ export namespace Prisma {
 
   export type RoomsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
     roomMembers?: UsersUncheckedUpdateManyWithoutRoomMemberNestedInput
@@ -3515,20 +3492,17 @@ export namespace Prisma {
 
   export type RoomsCreateManyInput = {
     id?: number
-    roomId: string
     roomName: string
     ownerId: number
   }
 
   export type RoomsUpdateManyMutationInput = {
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
   }
 
   export type RoomsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
   }
@@ -3672,7 +3646,6 @@ export namespace Prisma {
 
   export type RoomsCountOrderByAggregateInput = {
     id?: SortOrder
-    roomId?: SortOrder
     roomName?: SortOrder
     ownerId?: SortOrder
   }
@@ -3684,14 +3657,12 @@ export namespace Prisma {
 
   export type RoomsMaxOrderByAggregateInput = {
     id?: SortOrder
-    roomId?: SortOrder
     roomName?: SortOrder
     ownerId?: SortOrder
   }
 
   export type RoomsMinOrderByAggregateInput = {
     id?: SortOrder
-    roomId?: SortOrder
     roomName?: SortOrder
     ownerId?: SortOrder
   }
@@ -3868,14 +3839,12 @@ export namespace Prisma {
   }
 
   export type RoomsCreateWithoutRoomMembersInput = {
-    roomId: string
     roomName: string
     ownerId: number
   }
 
   export type RoomsUncheckedCreateWithoutRoomMembersInput = {
     id?: number
-    roomId: string
     roomName: string
     ownerId: number
   }
@@ -3897,14 +3866,12 @@ export namespace Prisma {
   }
 
   export type RoomsUpdateWithoutRoomMembersInput = {
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
   }
 
   export type RoomsUncheckedUpdateWithoutRoomMembersInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
     roomName?: StringFieldUpdateOperationsInput | string
     ownerId?: IntFieldUpdateOperationsInput | number
   }

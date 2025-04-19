@@ -128,7 +128,6 @@ exports.Prisma.UsersScalarFieldEnum = {
 
 exports.Prisma.RoomsScalarFieldEnum = {
   id: 'id',
-  roomId: 'roomId',
   roomName: 'roomName',
   ownerId: 'ownerId'
 };
