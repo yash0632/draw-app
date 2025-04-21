@@ -1,12 +1,16 @@
-import express,{Request,Response } from "express";
+import express,{NextFunction, Request,Response } from "express";
 import { createRoomSchema,addRoomSchema } from "@repo/common/schema/roomschema";
 import RoomControllerInstance from "../controllers/roomcontroller";
 const router:express.Router = express.Router();
 import { jwtMiddleWareFunc } from "../auth/auth";
+import roomcontroller from "../controllers/roomcontroller";
 
 
-//@ts-ignore
-router.post('create',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
+router.use(jwtMiddleWareFunc);
+
+
+
+router.post('create',async(req:Request,res:Response)=>{
     try{
         const {roomName} = req.body;
         const response = createRoomSchema.safeParse(req.body);
@@ -28,8 +32,8 @@ router.post('create',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
     }
 })
 
-//@ts-ignore
-router.post('add-user',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
+
+router.post('add-user',async(req:Request,res:Response)=>{
     try{
         const {roomName} = req.body;
         const response = addRoomSchema.safeParse(req.body);
@@ -48,6 +52,13 @@ router.post('add-user',jwtMiddleWareFunc,async(req:Request,res:Response)=>{
         res.json({
             error:error
         })
+    }
+})
+
+
+router.put('remove-user',async(req:Request,res:Response)=>{
+    try{
+        roomcontroller.removeRoomMember(req,res);
     }
 })
 

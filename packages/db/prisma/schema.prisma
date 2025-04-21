@@ -20,13 +20,10 @@ model Users{
   hashPassword String
   createdAt DateTime @default(now())
   
-  roomMember Rooms @relation(fields:[roomMemberId],references:[id])
-  roomMemberId Int @default(0)
 }
 
 model Rooms{
   id Int @id @default(autoincrement()) @unique
   roomName String 
   ownerId Int
-  roomMembers Users[]
 }

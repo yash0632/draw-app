@@ -68,6 +68,8 @@ class RoomRepository{
             throw error
         }
     }
+
+    deleteRoomMember=(roomMemberId:number,)
 }
 
 export default RoomRepository.getInstance()

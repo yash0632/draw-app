@@ -7,3 +7,4 @@ export const createRoomSchema = z.object({
 export const addRoomSchema = z.object({
     roomName:z.string()
 })
+

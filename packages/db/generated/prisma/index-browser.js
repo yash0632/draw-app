@@ -122,8 +122,7 @@ exports.Prisma.UsersScalarFieldEnum = {
   username: 'username',
   email: 'email',
   hashPassword: 'hashPassword',
-  createdAt: 'createdAt',
-  roomMemberId: 'roomMemberId'
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.RoomsScalarFieldEnum = {

@@ -16,15 +16,17 @@ export const jwtSignFunc = (email:string):string=>{
 export const jwtMiddleWareFunc=(req:Request,res:Response,next:NextFunction)=>{
     const authorizationHeader = req.headers['authorization']
     if(!authorizationHeader){
-        return res.status(401).json({
+        res.status(401).json({
             message:"Unauthorized"
         })
+        return;
     }
     const token = authorizationHeader.split(' ')[1]
     if(!token){
-        return res.status(401).json({
+        res.status(401).json({
             message:"Unauthorized"
         })
+        return;
     }
     try{
         jwt.verify(token,JWT_SECRET,(err,decoded)=>{
@@ -38,9 +40,10 @@ export const jwtMiddleWareFunc=(req:Request,res:Response,next:NextFunction)=>{
         })
     }
     catch(err){
-        return res.json({
+       res.json({
             message:"Unauthorized"
         })
+        return;
     }
 }
 

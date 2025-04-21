@@ -42,6 +42,24 @@ class RoomService{
             throw err;
         }
     }
+
+    deleteRoomMember = async(email:string,roomName:string){
+        try{
+            const user = await UserRepositoryInstance.getUser(email);
+            if(!user){
+                throw new Error("User not found");
+            }
+            const roomMemberId = user.roomMemberId;
+            if(roomMemberId === 0){
+                throw new Error("User is not a room member");
+            }
+            await RoomRepositoryInstance.deleteRoomMember(roomMemberId);
+            
+        }
+        catch(error){
+            throw error;
+        }
+    }
 }
 
 export default RoomService.getInstance();

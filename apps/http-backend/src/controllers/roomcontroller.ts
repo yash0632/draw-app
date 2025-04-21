@@ -57,6 +57,17 @@ class RoomController{
             return
         }
     }
+
+    removeRoomMember = async(req:Request,res:Response)=>{
+        try{
+            const userEmail = req.email;
+            const roomName = req.body.roomName;
+            
+        }
+        catch(error){
+
+        }
+    }
 }
         
 
