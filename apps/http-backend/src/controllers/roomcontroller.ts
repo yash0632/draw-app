@@ -1,5 +1,5 @@
 import {Request,Response} from "express"
-import {CreateRoomType,AddRoomType} from "@repo/common/types/roomtype"
+import {CreateRoomType,AddRoomMemberType,DeleteRoomMemberType} from "@repo/common/types/roomtype"
 
 import RoomServiceInstance from "../services/roomservices"
 class RoomController{
@@ -35,17 +35,17 @@ class RoomController{
     }
 
 
-    addRoomMember = async(req:Request<{},{},AddRoomType>,res:Response)=>{
-        const {roomName} = req.body;
+    addRoomMember = async(req:Request<{},{},AddRoomMemberType>,res:Response)=>{
+        const {roomId} = req.body;
         try{
             if(!req.email){
                 return res.status(401).json({
                     message:"Internal Server Error"
                 })
             }
-            const {roomId} = await RoomServiceInstance.addRoomMember(roomName,req.email);
+            const {room} = await RoomServiceInstance.addRoomMember(roomId,req.email);
             return res.json({
-                roomName:roomName,
+                room:room,
                 roomId:roomId,
                 message:"Room member added successfully"
             })
@@ -58,11 +58,19 @@ class RoomController{
         }
     }
 
-    removeRoomMember = async(req:Request,res:Response)=>{
+    removeRoomMember = async(req:Request<{},{},DeleteRoomMemberType>,res:Response)=>{
         try{
-            const userEmail = req.email;
-            const roomName = req.body.roomName;
-            
+            if(!req.email){
+                return res.status(401).json({
+                    message:"Internal Server Error"
+                })
+            }
+            const roomId = req.body.roomId;
+            const room = await RoomServiceInstance.removeRoomMember(roomId,req.email);
+            return res.json({
+                room:room,
+                message:"Room member removed successfully"
+            })
         }
         catch(error){
 

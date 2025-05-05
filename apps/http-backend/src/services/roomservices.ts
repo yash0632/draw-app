@@ -27,34 +27,34 @@ class RoomService{
     }
 
 
-    addRoomMember = async(roomName:string,email:string)=>{
+    addRoomMember = async(roomId:number,email:string)=>{
         try{
             const user = await UserRepositoryInstance.getUser(email);
             if(!user){
                 throw new Error("User not found");
             }
             const userId = user.id;
-            const roomId = await RoomRepositoryInstance.getRoomId(roomName);
             const room = await RoomRepositoryInstance.addRoomMember(roomId,userId);
-            return {roomId:room.id};
+            
+            return {room:room};
         }
         catch(err){
             throw err;
         }
     }
 
-    deleteRoomMember = async(email:string,roomName:string){
+    removeRoomMember = async(roomId:number,email:string)=>{
         try{
             const user = await UserRepositoryInstance.getUser(email);
             if(!user){
                 throw new Error("User not found");
             }
-            const roomMemberId = user.roomMemberId;
-            if(roomMemberId === 0){
+            
+            if(roomId !== user.roomId){
                 throw new Error("User is not a room member");
             }
-            await RoomRepositoryInstance.deleteRoomMember(roomMemberId);
-            
+            const room =await RoomRepositoryInstance.removeRoomMember(roomId,user.id);
+            return {room:room};
         }
         catch(error){
             throw error;

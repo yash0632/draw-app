@@ -5,7 +5,9 @@ class RoomManager{
     static instance : RoomManager
     #client:RedisClientType
     private constructor(){
-        this.#client = createClient();
+        this.#client = createClient({
+            url:"redis://localhost:6379"
+        });
     }
 
     static getInstance(){

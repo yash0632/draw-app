@@ -20,10 +20,13 @@ model Users {
   email        String   @unique
   hashPassword String
   createdAt    DateTime @default(now())
+  room         Rooms    @relation(fields: [roomId], references: [id])
+  roomId       Int      @default(0)
 }
 
 model Rooms {
-  id       Int    @id @unique @default(autoincrement())
-  roomName String
-  ownerId  Int
+  id          Int     @id @unique @default(autoincrement())
+  roomName    String
+  ownerId     Int
+  roomMembers Users[]
 }

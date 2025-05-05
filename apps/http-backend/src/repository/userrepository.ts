@@ -17,6 +17,7 @@ class UserRepository{
                     username,
                     email,
                     hashPassword
+
                 }
             })
             return user;

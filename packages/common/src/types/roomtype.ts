@@ -1,6 +1,7 @@
 import {z} from 'zod'
 
-import {createRoomSchema,addRoomSchema} from '../schema/roomschema'
+import {createRoomSchema,addRoomSchema,deleteRoomMemberSchema} from '../schema/roomschema'
 
 export type CreateRoomType = z.infer<typeof createRoomSchema>
-export type AddRoomType = z.infer<typeof addRoomSchema>
+export type AddRoomMemberType = z.infer<typeof addRoomSchema>
+export type DeleteRoomMemberType = z.infer<typeof deleteRoomMemberSchema>

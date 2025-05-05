@@ -60,6 +60,11 @@ router.put('remove-user',async(req:Request,res:Response)=>{
     try{
         roomcontroller.removeRoomMember(req,res);
     }
+    catch(error){
+        res.json({
+            error:error
+        })
+    }
 })
 
 export default router;

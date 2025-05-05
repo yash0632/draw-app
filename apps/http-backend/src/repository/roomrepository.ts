@@ -69,7 +69,26 @@ class RoomRepository{
         }
     }
 
-    deleteRoomMember=(roomMemberId:number,)
+    removeRoomMember =async (roomId:number,userId:number)=>{
+        try{
+            const room =await client.rooms.update({
+                where:{
+                    id:roomId
+                },
+                data:{
+                    roomMembers:{
+                        disconnect:{
+                            id:userId
+                        }
+                    }
+                }
+            })
+            return room;
+        }
+        catch(error){
+            throw error
+        }
+    }
 }
 
 export default RoomRepository.getInstance()
