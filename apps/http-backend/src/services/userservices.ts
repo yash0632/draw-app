@@ -2,6 +2,7 @@ import { jwtSignFunc } from "../middleware/auth";
 import hashPasswordFunc from "../libs/hash";
 
 import UserRepositoryInstance from "../repository/userrepository";
+import logger from "@repo/backend-common/logger";
 
 class UserServices {
   static instance: UserServices;
@@ -15,11 +16,11 @@ class UserServices {
     return UserServices.instance;
   }
 
-  registerUser = async (username: string, email: string, password: string) => {
+  registerUser = async (username: string, email: string, password: string,avatarPhoto:string|undefined) => {
     const hashPassword = hashPasswordFunc(password);
     try {
       
-      await UserRepositoryInstance.createUser(username, email, hashPassword);
+      await UserRepositoryInstance.createUser(username, email, hashPassword,avatarPhoto);
 
       const token = jwtSignFunc({
         email:email
@@ -41,10 +42,12 @@ class UserServices {
       const hashPassword = hashPasswordFunc(password);
       if (hashPassword != userDbHashPassword) {
         throw new Error("Invalid password");
+        
       }
-      const token = jwtSignFunc(email);
+      const token = jwtSignFunc({email});
       return token;
-    } catch (error) {
+    } catch (error:any) {
+      
       throw error;
     }
   };

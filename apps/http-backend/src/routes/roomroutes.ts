@@ -12,24 +12,24 @@ import validate from "../utils/validate";
 router.use(jwtMiddleWareFunc);
 
 router.post(
-  "create",
+  "/create",
   jwtMiddleWareFunc,
   validate(createRoomSchema),
   RoomControllerInstance.createRoom
 );
 
-router.post(
-  "add-user",
-  jwtMiddleWareFunc,
-  validate(addRoomSchema),
-  RoomControllerInstance.addRoomMember
-);
+// router.post(
+//   "add-user",
+//   jwtMiddleWareFunc,
+//   validate(addRoomSchema),
+//   RoomControllerInstance.addRoomMember
+// );
 
-router.put(
-  "remove-user",
-  jwtMiddleWareFunc,
-  validate(deleteRoomMemberSchema),
-  RoomControllerInstance.removeRoomMember
-);
+// router.put(
+//   "remove-user",
+//   jwtMiddleWareFunc,
+//   validate(deleteRoomMemberSchema),
+//   RoomControllerInstance.removeRoomMember
+// );
 
 export default router;

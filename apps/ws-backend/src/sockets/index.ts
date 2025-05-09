@@ -1,69 +1,46 @@
-import {IncomingMessage, Server} from 'http'
-import { jwtMiddleWareFunc } from '../auth/auth'
-import { WebSocketServer,WebSocket } from 'ws';
+import {Server} from 'http'
+import { WebSocketServer,WebSocket } from 'ws'
+import logger from '@repo/backend-common/logger'
+import { jwtMiddleWareFunc } from '../middleware/auth'
 
-const HEARTBEAT_INTERVAL = 5*1000;
-const HEARTBEAT_VALUE = 1;
+export default function configureSocketServer(server: Server){
+    const wss:WebSocketServer = new WebSocketServer({noServer:true})
 
-function sendHeartbeat(client:WebSocket){
-    client.send(HEARTBEAT_VALUE,{binary:true})
-    //TO BE DELETED
-    console.log("Firing Intervals");
-}
+    server.on('upgrade',(request,socket,head)=>{
 
+        socket.on("error",onSocketPreError)
 
-export default function configureSockets(server:Server){
-    const wss = new WebSocketServer({noServer:true});
-
-
-    wss.on('connection',(ws:WebSocket)=>{
-        ws.isAlive = true;
-        ws.on('error',()=>{
-            ws.terminate();
-            console.log("WebSocket connection closed") //TO BE DELETED
+        //Perform Authorization
+        if(!jwtMiddleWareFunc(request)){
+            logger.error("Error in Authorization")
+            socket.destroy()
+        }
+        socket.removeListener("error",onSocketError)
+        
+        wss.handleUpgrade(request,socket,head,(ws)=>{
+            wss.emit('connection',ws,request)
         })
+    })
 
-        ws.on('close',()=>{
-            console.log("WebSocket connection closed") //TO BE DELETED
-        })
 
-        ws.on('message',(message,isBinary)=>{
-            if(isBinary && (message as any)[0] === HEARTBEAT_VALUE){
-                ws.isAlive = true
-                console.log("pong") //TO BE DELETED
-            }
+    wss.on('connection',(ws:WebSocket,req)=>{
+        ws.on('message',(message:Buffer,isBinary)=>{
             wss.clients.forEach((client)=>{
-                if(client.readyState === WebSocket.OPEN && client !== ws){
-                    client.send(message,{binary:isBinary})
+                if(client !== ws && client.readyState === WebSocket.OPEN){
+                    client.send(message,{binary:isBinary});
                 }
             })
         })
 
-        console.log('WebSocket connection opened') //TO BE DELETED
+        ws.on('close',()=>{
+            logger.info("Client Disconnected")
+        })
+        ws.on('error',onSocketError)
     })
 
-    const interval = setInterval(()=>{
-        wss.clients.forEach((client:WebSocket)=>{
-            if(!client.isAlive){
-                client.terminate();
-            }
-            client.isAlive = false;
-            sendHeartbeat(client);
-
-        })
-    },HEARTBEAT_INTERVAL);
-
-    server.on('upgrade',(request:IncomingMessage,socket,head)=>{
-        //authentication //TO BE DELETED
-        if(!jwtMiddleWareFunc(request)){
-            socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-            socket.destroy();
-            return;
-        }
-        
-        wss.handleUpgrade(request,socket,head,(ws)=>{
-            wss.emit('connection',ws)
-        })
-
-    })
 }
+
+function onSocketError(e:Error){
+    logger.error(e)
+}
+

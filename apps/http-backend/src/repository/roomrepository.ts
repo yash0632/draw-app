@@ -11,17 +11,13 @@ class RoomRepository{
         return RoomRepository.instance;
     }
 
-    createRoom = async(roomName:string,userId:number)=>{
+    createRoom = async(slug:string,userId:string)=>{
         try{
-            const room = await client.rooms.create({
+            const room = await client.room.create({
                 data:{
-                    roomName:roomName,
-                    ownerId:userId,
-                    roomMembers:{
-                        connect:{
-                            id:userId
-                        }
-                    }
+                    slug:slug,
+                    adminId:userId,
+                    
                 }
             })
             return room;
@@ -31,32 +27,32 @@ class RoomRepository{
         }
     }
 
-    addRoomMember = async(roomId:number,userId:number)=>{
-        try{
-            const room =await client.rooms.update({
-                where:{
-                    id:roomId,
-                },
-                data:{
-                    roomMembers:{
-                        connect:{
-                            id:userId
-                        }
-                    }
-                }
-            })
-            return room;
-        }
-        catch(error){
-            throw error
-        }
-    }
+    // addRoomMember = async(roomId:number,userId:number)=>{
+    //     try{
+    //         const room =await client.room.update({
+    //             where:{
+    //                 id:roomId,
+    //             },
+    //             data:{
+    //                 roomMembers:{
+    //                     connect:{
+    //                         id:userId
+    //                     }
+    //                 }
+    //             }
+    //         })
+    //         return room;
+    //     }
+    //     catch(error){
+    //         throw error
+    //     }
+    // }
 
-    getRoomId = async(roomName:string)=>{
+    getRoomId = async(slug:string)=>{
         try{
-            const room = await client.rooms.findFirst({
+            const room = await client.room.findFirst({
                 where:{
-                    roomName:roomName
+                    slug:slug
                 }
             })
             if(!room){
@@ -69,26 +65,26 @@ class RoomRepository{
         }
     }
 
-    removeRoomMember =async (roomId:number,userId:number)=>{
-        try{
-            const room =await client.rooms.update({
-                where:{
-                    id:roomId
-                },
-                data:{
-                    roomMembers:{
-                        disconnect:{
-                            id:userId
-                        }
-                    }
-                }
-            })
-            return room;
-        }
-        catch(error){
-            throw error
-        }
-    }
+    // removeRoomMember =async (roomId:number,userId:number)=>{
+    //     try{
+    //         const room =await client.room.update({
+    //             where:{
+    //                 id:roomId
+    //             },
+    //             data:{
+    //                 roomMembers:{
+    //                     disconnect:{
+    //                         id:userId
+    //                     }
+    //                 }
+    //             }
+    //         })
+    //         return room;
+    //     }
+    //     catch(error){
+    //         throw error
+    //     }
+    // }
 }
 
 export default RoomRepository.getInstance()

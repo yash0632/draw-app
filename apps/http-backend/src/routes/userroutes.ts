@@ -14,7 +14,6 @@ router.post(
 
 router.post(
   "/signin",
-  jwtMiddleWareFunc,
   validate(signinSchema),
   UserControllerInstance.login
 );

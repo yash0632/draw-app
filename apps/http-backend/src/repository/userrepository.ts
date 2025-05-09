@@ -10,13 +10,14 @@ class UserRepository{
         return UserRepository.instance;
 }
 
-    createUser=async(username:string,email:string,hashPassword:string)=>{
+    createUser=async(username:string,email:string,hashPassword:string,avatarPhoto:string|undefined)=>{
         try{
-            const user = await client.users.create({
+            const user = await client.user.create({
                 data:{
                     username,
                     email,
-                    hashPassword
+                    hashPassword,
+                    avatarPhoto
                 }
             })
             return user;
@@ -28,7 +29,7 @@ class UserRepository{
 
     getUser = async(email:string)=>{
         try{
-            const user = await client.users.findFirst({
+            const user = await client.user.findFirst({
                 where:{
                     email
                 }

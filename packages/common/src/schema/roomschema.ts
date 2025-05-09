@@ -2,7 +2,7 @@ import {z} from "zod"
 
 export const createRoomSchema = z.object({
     body:z.object({
-        roomName: z.string(),
+        slug: z.string(),
         email:z.string().email()
     })
 })

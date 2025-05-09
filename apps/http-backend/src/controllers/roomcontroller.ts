@@ -14,65 +14,63 @@ class RoomController{
     }
 
     createRoom = async(req:Request<{},{},CreateRoomType['body']>,res:Response)=>{
-        const {roomName,email} = req.body;
+        const {slug,email} = req.body;
 
         try{
-            if(!req.email){
-                throw new Error("Internal Server Error");
-            }
-            const {roomId} = await RoomServiceInstance.createRoom(roomName,email);
+            const {roomId} = await RoomServiceInstance.createRoom(slug,email);
             res.json({
-                roomName:roomName,
+                roomName:slug,
                 roomId:roomId,
                 message:"Room created successfully"
             })
             return 
         }
-        catch(err){
-            res.json({
-                error:err
+        catch(err:any){
+            res.status(400).json({
+                message:"Internal Server Error",
+                error:err.message
             })
             return
         }
     }
 
 
-    addRoomMember = async(req:Request<{},{},AddRoomMemberType['body']>,res:Response)=>{
-        const {roomId,email} = req.body;
-        try{
-            const {room} = await RoomServiceInstance.addRoomMember(roomId,email);
-            res.json({
-                roomName:room.roomName,
-                roomId:roomId,
-                message:"Room member added successfully"
-            })
-            return 
-        }
-        catch(error){
-            res.json({
-                error:error
-            })
-            return
-        }
-    }
+    // addRoomMember = async(req:Request<{},{},AddRoomMemberType['body']>,res:Response)=>{
+    //     const {roomId,email} = req.body;
+    //     try{
+    //         const {room} = await RoomServiceInstance.addRoomMember(roomId,email);
+    //         res.json({
+    //             roomName:room.roomName,
+    //             roomId:roomId,
+    //             message:"Room member added successfully"
+    //         })
+    //         return 
+    //     }
+    //     catch(error){
+    //         res.json({
+    //             error:error
+    //         })
+    //         return
+    //     }
+    // }
 
-    removeRoomMember = async(req:Request<{},{},DeleteRoomMemberType['body']>,res:Response)=>{
-        try{
-            const {roomId,email} = req.body;
-            const room = await RoomServiceInstance.removeRoomMember(roomId,email);
-            res.json({
-                room:room,
-                message:"Room member removed successfully"
-            })
-            return
-        }
-        catch(error){
-            res.status(500).json({
-                error:error
-            })
-            return
-        }
-    }
+    // removeRoomMember = async(req:Request<{},{},DeleteRoomMemberType['body']>,res:Response)=>{
+    //     try{
+    //         const {roomId,email} = req.body;
+    //         const room = await RoomServiceInstance.removeRoomMember(roomId,email);
+    //         res.json({
+    //             room:room,
+    //             message:"Room member removed successfully"
+    //         })
+    //         return
+    //     }
+    //     catch(error){
+    //         res.status(500).json({
+    //             error:error
+    //         })
+    //         return
+    //     }
+    // }
 }
         
 

@@ -17,9 +17,9 @@ class UserController{
 
     register = async(request:Request<{},{},SignUpType['body']>,res:Response)=>{
         try{
-            const {username,email,password} = request.body;
+            const {username,email,password,avatarPhoto} = request.body;
             
-            const token = await AuthServicesInstance.registerUser(username,email,password);
+            const token = await AuthServicesInstance.registerUser(username,email,password,avatarPhoto);
 
             res.status(200).json({
                 message:"User registered successfully",
@@ -27,9 +27,9 @@ class UserController{
             })
             return;
         }
-        catch(error){
+        catch(error:any){
             res.status(500).json({
-                error:error
+                error:error.message
             })
             return;
         }
@@ -47,9 +47,10 @@ class UserController{
                 token
             })
             return 
-        }catch(error){
-            res.json({
-                error:error
+        }catch(error:any){
+            
+            res.status(500).json({
+                error:error.message
             })
             return 
         }
