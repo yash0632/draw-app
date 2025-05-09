@@ -13,13 +13,14 @@ class RoomController{
         return RoomController.instance;
     }
 
-    createRoom = async(req:Request<{},{},CreateRoomType>,res:Response)=>{
-        const {roomName} = req.body;
+    createRoom = async(req:Request<{},{},CreateRoomType['body']>,res:Response)=>{
+        const {roomName,email} = req.body;
+
         try{
             if(!req.email){
                 throw new Error("Internal Server Error");
             }
-            const {roomId} = await RoomServiceInstance.createRoom(roomName,req.email);
+            const {roomId} = await RoomServiceInstance.createRoom(roomName,email);
             res.json({
                 roomName:roomName,
                 roomId:roomId,
@@ -36,18 +37,12 @@ class RoomController{
     }
 
 
-    addRoomMember = async(req:Request<{},{},AddRoomMemberType>,res:Response)=>{
-        const {roomId} = req.body;
+    addRoomMember = async(req:Request<{},{},AddRoomMemberType['body']>,res:Response)=>{
+        const {roomId,email} = req.body;
         try{
-            if(!req.email){
-                res.status(401).json({
-                    message:"Internal Server Error"
-                })
-                return 
-            }
-            const {room} = await RoomServiceInstance.addRoomMember(roomId,req.email);
+            const {room} = await RoomServiceInstance.addRoomMember(roomId,email);
             res.json({
-                room:room,
+                roomName:room.roomName,
                 roomId:roomId,
                 message:"Room member added successfully"
             })
@@ -61,16 +56,10 @@ class RoomController{
         }
     }
 
-    removeRoomMember = async(req:Request<{},{},DeleteRoomMemberType>,res:Response)=>{
+    removeRoomMember = async(req:Request<{},{},DeleteRoomMemberType['body']>,res:Response)=>{
         try{
-            if(!req.email){
-                res.status(401).json({
-                    message:"Internal Server Error"
-                })
-                return;
-            }
-            const roomId = req.body.roomId;
-            const room = await RoomServiceInstance.removeRoomMember(roomId,req.email);
+            const {roomId,email} = req.body;
+            const room = await RoomServiceInstance.removeRoomMember(roomId,email);
             res.json({
                 room:room,
                 message:"Room member removed successfully"

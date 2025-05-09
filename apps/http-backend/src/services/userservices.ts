@@ -1,55 +1,53 @@
-import { jwtSignFunc } from "../auth/auth";
+import { jwtSignFunc } from "../middleware/auth";
 import hashPasswordFunc from "../libs/hash";
 
 import UserRepositoryInstance from "../repository/userrepository";
 
-class UserServices{
-    static instance : UserServices;
-    
-    private constructor() {
-        
-    }
+class UserServices {
+  static instance: UserServices;
 
-    static getInstance(){
-        if(!UserServices.instance){
-            UserServices.instance = new UserServices();
-        }
-        return UserServices.instance;
-    }
+  private constructor() {}
 
-    registerUser=async(username:string,email:string,password:string)=>{
-        const hashPassword = hashPasswordFunc(password);
-        try{
-            UserRepositoryInstance.createUser(username,email,hashPassword);
-            
-            const token = jwtSignFunc(email);
-            
-            return token
-        }
-        catch(err){
-            throw err;
-        }
-        
+  static getInstance() {
+    if (!UserServices.instance) {
+      UserServices.instance = new UserServices();
     }
+    return UserServices.instance;
+  }
 
-    loginUser = async(email:string,password:string)=>{
-        try{
-            const user = await UserRepositoryInstance.getUser(email)
-            if(!user){
-                throw new Error("User not found");
-            }
-            const userDbHashPassword = user.hashPassword;
-            const hashPassword = hashPasswordFunc(password);
-            if(hashPassword != userDbHashPassword){
-                throw new Error('Invalid password')
-            }
-            const token = jwtSignFunc(email);
-            return token;
-        }
-        catch(error){
-            throw error;
-        }
+  registerUser = async (username: string, email: string, password: string) => {
+    const hashPassword = hashPasswordFunc(password);
+    try {
+      
+      await UserRepositoryInstance.createUser(username, email, hashPassword);
+
+      const token = jwtSignFunc({
+        email:email
+      });
+
+      return token;
+    } catch (err: any) {
+      throw err;
     }
+  };
+
+  loginUser = async (email: string, password: string) => {
+    try {
+      const user = await UserRepositoryInstance.getUser(email);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      const userDbHashPassword = user.hashPassword;
+      const hashPassword = hashPasswordFunc(password);
+      if (hashPassword != userDbHashPassword) {
+        throw new Error("Invalid password");
+      }
+      const token = jwtSignFunc(email);
+      return token;
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default UserServices.getInstance();

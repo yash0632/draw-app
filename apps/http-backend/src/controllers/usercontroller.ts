@@ -15,10 +15,10 @@ class UserController{
         return UserController.instance;
     }
 
-    register = async(request:Request<{},{},SignUpType>,res:Response)=>{
+    register = async(request:Request<{},{},SignUpType['body']>,res:Response)=>{
         try{
             const {username,email,password} = request.body;
-
+            
             const token = await AuthServicesInstance.registerUser(username,email,password);
 
             res.status(200).json({
@@ -36,7 +36,7 @@ class UserController{
     }
 
 
-    login=async(req:Request<{},{},SignInType>,res:Response)=>{
+    login=async(req:Request<{},{},SignInType['body']>,res:Response)=>{
         try{
             const{email,password} = req.body;
 

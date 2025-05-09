@@ -1,14 +1,23 @@
 import {z} from "zod"
 
 export const createRoomSchema = z.object({
-    roomName: z.string()
+    body:z.object({
+        roomName: z.string(),
+        email:z.string().email()
+    })
 })
 
 export const addRoomSchema = z.object({
-    roomId:z.number()
+    body:z.object({
+        roomId: z.number(),
+        email:z.string().email()
+    })
 })
 
 export const deleteRoomMemberSchema = z.object({
-    roomId:z.number(),
+    body:z.object({
+        roomId: z.number(),
+        email:z.string().email()
+    })
 })
 
