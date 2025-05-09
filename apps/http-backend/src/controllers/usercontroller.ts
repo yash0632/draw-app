@@ -1,18 +1,18 @@
 import {Request,Response} from "express"
 import crypto from "crypto"
-import AuthServicesInstance from "../services/authservices"
+import AuthServicesInstance from "../services/userservices"
 import { SignInType, SignUpType } from "@repo/common/types/usertype";
 
-class AuthController{
-    static instance:AuthController
+class UserController{
+    static instance:UserController
 
     private constructor(){}
 
     static getInstance(){
-        if(!AuthController.instance){
-            AuthController.instance = new AuthController();
+        if(!UserController.instance){
+            UserController.instance = new UserController();
         }
-        return AuthController.instance;
+        return UserController.instance;
     }
 
     register = async(request:Request<{},{},SignUpType>,res:Response)=>{
@@ -21,15 +21,17 @@ class AuthController{
 
             const token = await AuthServicesInstance.registerUser(username,email,password);
 
-            return res.status(200).json({
+            res.status(200).json({
                 message:"User registered successfully",
                 token
             })
+            return;
         }
         catch(error){
-            return res.status(500).json({
+            res.status(500).json({
                 error:error
             })
+            return;
         }
     }
 
@@ -40,16 +42,18 @@ class AuthController{
 
             const token = await AuthServicesInstance.loginUser(email,password);
 
-            return res.status(200).json({
+            res.status(200).json({
                 message:"User logged in successfully",
                 token
             })
+            return 
         }catch(error){
             res.json({
                 error:error
             })
+            return 
         }
     }
 }
 
-export default AuthController.getInstance();
+export default UserController.getInstance();

@@ -3,18 +3,18 @@ import hashPasswordFunc from "../libs/hash";
 
 import UserRepositoryInstance from "../repository/userrepository";
 
-class AuthServices{
-    static instance : AuthServices;
+class UserServices{
+    static instance : UserServices;
     
     private constructor() {
         
     }
 
     static getInstance(){
-        if(!AuthServices.instance){
-            AuthServices.instance = new AuthServices();
+        if(!UserServices.instance){
+            UserServices.instance = new UserServices();
         }
-        return AuthServices.instance;
+        return UserServices.instance;
     }
 
     registerUser=async(username:string,email:string,password:string)=>{
@@ -52,4 +52,4 @@ class AuthServices{
     }
 }
 
-export default AuthServices.getInstance();
+export default UserServices.getInstance();

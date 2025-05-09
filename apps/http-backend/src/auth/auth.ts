@@ -6,9 +6,10 @@ import {JWT_SECRET} from "@repo/backend-common/config"
 
 //Jwt verify and jwt sign
 
-export const jwtSignFunc = (email:string):string=>{
-    const token =jwt.sign({email},JWT_SECRET,{
-        expiresIn:"24h"
+export const jwtSignFunc = (payload:Object,options?:jwt.SignOptions):string=>{
+    const token =jwt.sign(payload,JWT_SECRET,{
+        ...options,
+        expiresIn:"15m"
     })
     return token
 }

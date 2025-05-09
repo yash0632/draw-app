@@ -5,7 +5,9 @@
   "main": "index.js",
   "exports": {
     "./config": "./dist/index.js",
-    "./redisRoomManager": "./dist/utils/roommanager.js"
+    "./redisRoomManager": "./dist/utils/roommanager.js",
+    "./redisUserManager": "./dist/utils/usermanager.js",
+    "./logger": "./dist/utils/logger.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,6 +24,8 @@
   "dependencies": {
     "@types/node": "^22.14.1",
     "dotenv": "^16.5.0",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "winston": "^3.17.0"
+    
   }
 }
