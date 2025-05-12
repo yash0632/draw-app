@@ -1,1 +1,1 @@
-{"root":["./src/schema/roomschema.ts","./src/schema/userschema.ts","./src/types/roomtype.ts","./src/types/usertype.ts"],"version":"5.8.2"}
+{"root":["./src/schema/chat.schema.ts","./src/schema/roomschema.ts","./src/schema/userschema.ts","./src/types/chat.types.ts","./src/types/roomtype.ts","./src/types/usertype.ts"],"version":"5.8.2"}

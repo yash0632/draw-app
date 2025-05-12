@@ -6,8 +6,10 @@
   "exports": {
     "./schema/roomschema": "./dist/schema/roomschema.js",
     "./schema/userschema": "./dist/schema/userschema.js",
+    "./schema/chatschema":"./dist/schema/chat.routes.js",
     "./types/roomtype": "./dist/types/roomtype.js",
     "./types/usertype": "./dist/types/usertype.js",
+    "./types/chattype": "./dist/types/chat.types.js",
     "./schema":"./dist/schema/*",
     "./types":"./dist/types/*"
   },

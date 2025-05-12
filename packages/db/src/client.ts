@@ -11,5 +11,6 @@ export async function checkDBConnection() {
     await client.$disconnect();
   }
 }
+checkDBConnection();
 
 export default client;

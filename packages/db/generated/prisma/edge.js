@@ -176,12 +176,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://draw-app-db_owner:npg_FCl0ycDTzO5X@ep-divine-glitter-a4544hxj.us-east-1.aws.neon.tech/draw-app-db?sslmode=require&connect_timeout=500"
       }
     }
   },

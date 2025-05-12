@@ -17,23 +17,25 @@ export const jwtSignFunc = (email:string):string=>{
     return token
 }
 
-export const jwtMiddleWareFunc=(req:IncomingMessage)=>{
-    const authorizationHeader = req.headers['authorization']
-    if(!authorizationHeader){
+export const checkUser=(token:string|null)=>{
+    if(!token ){
         return false;
     }
-    const token = authorizationHeader.split(' ')[1]
-    if(!token){
-        return false;
-    }
+    
     try{
-        const decoded = jwt.verify(token,JWT_SECRET) as {email:string}
-        req.email = decoded.email
-        return true
+        const decoded = jwt.verify(token,JWT_SECRET)
+        if(typeof decoded == "string"){
+            return null
+        }
+
+        if(!decoded || !decoded.userId){
+            return null
+        }
+        return decoded.userId;
     }
     catch(err){
         
-        return false;
+        return null;
     }
 }
 

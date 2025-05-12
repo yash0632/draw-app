@@ -7,6 +7,12 @@ export const createRoomSchema = z.object({
     })
 })
 
+export const GetRoomIdSchema = z.object({
+    params:z.object({
+        slug:z.string()
+    })
+})
+
 export const addRoomSchema = z.object({
     body:z.object({
         roomId: z.number(),

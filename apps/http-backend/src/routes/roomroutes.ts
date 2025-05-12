@@ -3,6 +3,7 @@ import {
   createRoomSchema,
   addRoomSchema,
   deleteRoomMemberSchema,
+  GetRoomIdSchema,
 } from "@repo/common/schema/roomschema";
 import RoomControllerInstance from "../controllers/roomcontroller";
 const router: express.Router = express.Router();
@@ -17,6 +18,14 @@ router.post(
   validate(createRoomSchema),
   RoomControllerInstance.createRoom
 );
+
+router.get(
+  "/:slug",
+  jwtMiddleWareFunc,
+  validate(GetRoomIdSchema),
+  RoomControllerInstance.GetRoomId
+)
+
 
 // router.post(
 //   "add-user",

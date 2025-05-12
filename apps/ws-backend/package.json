@@ -6,22 +6,29 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc -b",
-    "dev": "tsc -b && node dist/index.js"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "dependencies": {
+    "@repo/backend-common": "workspace:*",
+    "@repo/common": "workspace:*",
+    "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/ws": "^8.18.1",
+    "bullmq": "^5.52.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "ts-node-dev": "^2.0.0",
     "ws": "^8.18.1",
-    "@repo/backend-common":"workspace:*",
-    "@repo/db":"workspace:*",
-    "@repo/common":"workspace:*"
+    "zod": "^3.24.2"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.18"
+  }
 }

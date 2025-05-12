@@ -1,7 +1,8 @@
 import {Request,Response} from "express"
-import {CreateRoomType,AddRoomMemberType,DeleteRoomMemberType} from "@repo/common/types/roomtype"
+import {CreateRoomType,AddRoomMemberType,DeleteRoomMemberType, GetRoomIdType} from "@repo/common/types/roomtype"
 
 import RoomServiceInstance from "../services/roomservices"
+import userservices from "../services/userservices";
 class RoomController{
     static instance : RoomController;
     private constructor(){}
@@ -31,6 +32,19 @@ class RoomController{
                 error:err.message
             })
             return
+        }
+    }
+
+    GetRoomId = async(req:Request<GetRoomIdType['params'],{},{}>,res:Response)=>{
+        const slug = req.params.slug;
+        try{
+            const {roomId} = await RoomServiceInstance.GetRoomId(slug);
+            res.status(200).json({roomId:roomId});
+            console.log("roomId:",roomId)
+            return;
+        }
+        catch(err){
+            throw err;
         }
     }
 

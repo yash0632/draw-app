@@ -1,12 +1,14 @@
-version: '3.8'
+
+
 services:
-  redis:
-    image: redis:8.0-rc1-alpine3.21
-    container_name: redis-server
+  cache:
+    image: redis:6.2-alpine
+    restart: always
     ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    command: ["redis-server","--appendonly","yes"]
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cache:/data
 volumes:
-  redis-data:
+  cache:
+    driver: local

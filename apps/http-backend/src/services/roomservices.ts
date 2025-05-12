@@ -26,6 +26,16 @@ class RoomService{
         }
     }
 
+    GetRoomId = async(slug:string)=>{
+        try{
+            const roomId = await RoomRepositoryInstance.getRoomId(slug);
+            return {roomId:roomId};
+        }
+        catch(err){
+            throw err;
+        }
+    }
+
 
     // addRoomMember = async(roomId:number,email:string)=>{
     //     try{

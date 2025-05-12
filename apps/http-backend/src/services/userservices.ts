@@ -20,10 +20,11 @@ class UserServices {
     const hashPassword = hashPasswordFunc(password);
     try {
       
-      await UserRepositoryInstance.createUser(username, email, hashPassword,avatarPhoto);
+      const user =await UserRepositoryInstance.createUser(username, email, hashPassword,avatarPhoto);
 
       const token = jwtSignFunc({
-        email:email
+        email:email,
+        userId:user.id
       });
 
       return token;
@@ -44,7 +45,7 @@ class UserServices {
         throw new Error("Invalid password");
         
       }
-      const token = jwtSignFunc({email});
+      const token = jwtSignFunc({email,userId:user.id});
       return token;
     } catch (error:any) {
       
