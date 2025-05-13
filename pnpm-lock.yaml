@@ -27,6 +27,9 @@ importers:
 
   apps/excalidraw-frontend:
     dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       axios:
         specifier: ^1.9.0
         version: 1.9.0
