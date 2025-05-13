@@ -1,5 +1,17 @@
 import { PrismaClient } from "../generated/prisma/client.js";
-const client = new PrismaClient();
+import { withAccelerate } from '@prisma/extension-accelerate'
+import dotenv from 'dotenv'
+dotenv.config()
+
+const globalForPrisma = global as unknown as { 
+    prisma: PrismaClient
+}
+
+const client = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate())
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = client
+
+
 
 export async function checkDBConnection() {
   try {

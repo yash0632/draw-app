@@ -18,4 +18,10 @@ router.post(
   UserControllerInstance.login
 );
 
+router.post(
+  "/verify",
+  jwtMiddleWareFunc,
+  UserControllerInstance.verify
+)
+
 export default router;

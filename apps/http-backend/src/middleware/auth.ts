@@ -43,7 +43,7 @@ export const jwtMiddleWareFunc=(req:Request,res:Response,next:NextFunction)=>{
                 throw new Error("Invalid decoded object")
             }
             
-            if(req.body && req.body.email){
+            if(req.body){
                 req.body.email = decoded.email;
             }
             

@@ -45,6 +45,10 @@ class UserManagerClass{
         if(!room){
             return
         }
+        const roomInUser = user.rooms.find(id => id === roomId);
+        if(roomInUser){
+            return;
+        }
         user.rooms.push(roomId);
         
     }

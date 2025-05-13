@@ -48,8 +48,14 @@ class UserController{
         }catch(error:any){
             
             throw error;
-            return 
         }
+    }
+
+    verify = (req:Request,res:Response)=>{
+        res.json({
+            message:"User verified successfully"
+        })
+        return;
     }
 }
 

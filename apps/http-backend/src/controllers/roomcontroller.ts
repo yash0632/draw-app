@@ -20,7 +20,7 @@ class RoomController{
         try{
             const {roomId} = await RoomServiceInstance.createRoom(slug,email);
             res.json({
-                roomName:slug,
+                slug:slug,
                 roomId:roomId,
                 message:"Room created successfully"
             })
