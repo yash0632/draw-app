@@ -6,9 +6,16 @@ export function useSocket(){
     const [socket,setSocket] = useState<WebSocket>()
 
     useEffect(()=>{
-        const ws = new WebSocket(WS_URL)
-        ws.onopen = () => setLoading(false);
-        setSocket(ws)
+        const ws = new WebSocket(`${WS_URL}?token=${window.localStorage.getItem("token")}`)
+        
+        ws.onopen=()=>{
+            setLoading(false);
+            setSocket(ws);
+        }
+
+        return ()=>{
+            if(ws.readyState === WebSocket.OPEN) ws.close();
+        };
     },[])
 
     return{

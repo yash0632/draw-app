@@ -11,32 +11,49 @@ export default function ChatRoomClient({
     const {socket,loading} = useSocket();
     const [chats,setChats] = useState(messages);
     const [currentMessage,setCurrentMessage] = useState("");
-    console.log("chats in page:",chats)
+    
 
     useEffect(()=>{
-        if(socket && !loading && socket.readyState === WebSocket.OPEN){
-            socket.send(JSON.stringify({
-                type:"join_room",
-                data:{
-                    roomId:parseInt(id)
-                }
-            }))
-
-            socket.onmessage = (event) => {
-                const parsedData = JSON.parse(event.data);
-                if(parsedData.type === "chat"){
-                    setChats((messages) => [...messages,parsedData.data.message]);
+        if(socket && !loading){
+            
+            if(socket.readyState === WebSocket.OPEN){
+                socket.send(JSON.stringify({
+                    type:"join_room",
+                    data:{
+                        roomId:parseInt(id)
+                    }
+                }))
+            }
+            else{
+                socket.onopen = () => {
+                    socket.send(JSON.stringify({
+                        type:"join_room",
+                        data:{
+                            roomId:parseInt(id)
+                        }
+                    }))
                 }
             }
 
+            socket.onmessage = (event) => {
+                console.log("message received")
+                const parsedData = JSON.parse(event.data);
+                console.log(parsedData);
+                if(parsedData.type === "chat"){
+                    
+                    setChats((messages) => [...messages,{message:parsedData.data.message,id:chats.length+1}]);
+                }
+            }
+            
             
         }
+        
     },[socket,loading,id])
 
     return(
         <div>
             {chats.map((chat,index)=>(
-                <div key={chat.id}>
+                <div key={index}>
                     {chat.message}
                 </div>
             ))}
@@ -44,14 +61,18 @@ export default function ChatRoomClient({
             onChange={(e)=>setCurrentMessage(e.target.value)}
             ></input>
             <button onClick={()=>{
-                socket?.send(JSON.stringify({
-                    type:"chat",
-                    data:{
-                        roomId:parseInt(id),
-                        message:currentMessage
-                    }
-                }))
+                if(socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({
+                        type:"chat",
+                        data:{
+                            roomId:parseInt(id),
+                            message:currentMessage
+                        }
+                    }))
+                }
+                
                 setChats((messages) => [...messages,{message:currentMessage,id:chats.length+1}]);
+                setCurrentMessage("")
             }}>Send Message</button>
         </div>
     )

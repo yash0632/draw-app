@@ -80,20 +80,23 @@ class UserManagerClass{
         if(user == undefined){
             return;
         }
+        
         const room = await client.room.findFirst({where:{id:roomId}});
         if(!room){
             return;
         }
+        
+        console.log(user.rooms);
         const roomInUser = user.rooms.find(id => id === roomId);
         if(!roomInUser){
             return;
         }
-
+        
         const userInRooms = this.#users.filter(user => user.rooms.includes(roomId));
-
+        
         userInRooms.forEach(user => {
             if(user.ws != ws && user.ws.readyState === WebSocket.OPEN){
-                user.ws.send(JSON.stringify({message:chat,roomId}))
+                user.ws.send(JSON.stringify({type:"chat",data:{message:chat,roomId}}))
             }
         })
 

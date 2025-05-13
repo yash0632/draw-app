@@ -46,9 +46,10 @@ export default function configureSocketServer(server: Server){
 
         ws.on('message',async(data)=>{
             const parsedData = JSON.parse(data as unknown as string)
+            console.log("parsedData",parsedData);
             switch (parsedData.type){
                 case "join_room":
-
+                    console.log(parsedData.data)
                     await UserManagerInstance.addUserToRoom({ws,roomId:parsedData.data.roomId})
                     break;
 
@@ -58,7 +59,7 @@ export default function configureSocketServer(server: Server){
                     break;
 
                 case "chat":
-
+                    console.log(parsedData.data)
                     await UserManagerInstance.sendChatToRoom({
                         ws,roomId:parsedData.data.roomId,chat:parsedData.data.message})
                     break;

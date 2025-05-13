@@ -4,7 +4,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config";
 import { useEffect, useState } from "react";
 import { ChatRoom } from "../../../components/ChatRoom";
-import { useParams } from "next/navigation";
+
 
 interface chatRoomPageProps{
     params:{
