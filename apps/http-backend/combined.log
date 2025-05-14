@@ -304,3 +304,4 @@
 {"level":"info","message":"Server is running on port 1338","service":"user-service"}
 {"level":"error","message":"Invalid password","service":"user-service"}
 {"level":"info","message":"Server is running on port 1338","service":"user-service"}
+{"level":"info","message":"Server is running on port 1338","service":"user-service"}
