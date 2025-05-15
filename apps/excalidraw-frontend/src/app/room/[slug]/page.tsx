@@ -1,32 +1,39 @@
-"use client"
 
-import { useEffect, useRef } from 'react';
-import { initDraw } from '@/draw';
+import axios from 'axios';
+import { BACKEND_URL } from '@/config';
 
-export default function RoomPage(){
+
+import { Canvas } from '@/components/Canvas';
+
+export default async function RoomPage(
+    {params}:{
+        params:Promise<{
+            slug:string
+        }>
+    }
+){
    
-
-    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const slug = (await params).slug;
     
-    
-    useEffect(()=>{
-        if(canvasRef.current){
-            
-            
-            const canvas = canvasRef.current;
-            initDraw(canvas);
-        }
-    },[])
-    
+    const roomId = await getRoomId(slug);
+    console.log("roomId",roomId);
+    return(<Canvas roomId={roomId}/>)
 
-    
-
-    return(
-        <div>
-            <canvas ref={canvasRef} width={1500} height={1500}></canvas>
-        </div> 
-    )
-
-
-   
 }
+
+async function getRoomId(slug:string){
+    
+    const res = await axios.get(`${BACKEND_URL}/room/${slug}`,{
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+localStorage.getItem("token")
+        }
+    })
+    if(res.data && res.data.roomId != null){
+        const roomId = res.data.roomId as number;
+        return roomId;
+    }
+    
+    throw new Error("Room not found");
+}
+
