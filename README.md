@@ -159,29 +159,3 @@ draw-app/
 └── README.md
 ```
 
-## 📸 Screenshots
-
-(Add screenshots of the application here)
-
-## 🤝 Contributing
-
-We welcome contributions to the Draw App project! To contribute:
-
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix.
-3.  Make your changes and commit them with clear, descriptive messages.
-4.  Submit a pull request.
-
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## 📬 Contact
-
-If you have any questions or suggestions, please feel free to contact us at [your-email@example.com](mailto:your-email@example.com).
-
-## 💖 Thanks
-
-Thank you for checking out the Draw App! We hope you find it useful and enjoyable.
-
-This README is written by [readme.ai](https://readme-generator-phi.vercel.app/).
